@@ -13,15 +13,13 @@
 \DeclareOptionBeamer{width}
 {\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
 
-\DeclareOptionBeamer{hideothersubsections}
-{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
-
-\DeclareOptionBeamer{hideallsubsections}
-{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
+%\DeclareOptionBeamer{hideothersubsections}
+%{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
+%
+%\DeclareOptionBeamer{hideallsubsections}
+%{\PassOptionsToPackage{hideallsubsections=#1}{beamerouterthemesidebar}}
 
 \ProcessOptionsBeamer
-
-
 
 \mode<presentation>
 
@@ -31,6 +29,7 @@
 \setbeamercolor*{spil}{parent=structure}
 
 \useinnertheme{circles}
+\setbeamertemplate{itemize subitems}{arrow}
 \setbeamercolor{item}{fg=spilpurple}
 \setbeamertemplate{frametitle}[default][right]
 
