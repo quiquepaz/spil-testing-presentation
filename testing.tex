@@ -95,35 +95,38 @@
     \item Tests themselves are useful documentation
     \pause
     \item It makes refactoring \emph{really} an option
+    \pause
+    \item It helps finding bugs earlier, so the impact is much lower
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Yeah, but...}
     \begin{itemize}
-    \item My code is so clear/simple it doesn't need tests
+    \item \textit{``My code is so clear/simple it doesn't need tests''}
         %\begin{itemize}[label=$\rightarrow$]
         \begin{itemize}
         \pause
-        \item Simplicity and clarity are not universal words
+        \item \emph{simplicity} and \emph{clarity} are not universal words
         \pause
         \item The simpler your code is, the easier for you to test it
         \end{itemize}
     \pause
-    \item It takes me much longer testing the code than writing it
+    \item \textit{``It takes me much longer testing the code than writing it''}
         \begin{itemize}
         \pause
-        \item Was your original code working already??
+        \item Was your original code working or you spent the time fixing it?
         \pause
         \item Have you consider refactoring?
         \end{itemize}
     \pause
-    \item Setting up the scenario for testing my code is too complex
+    \item \textit{``Setting up the scenario for testing my code is too complex''}
         \begin{itemize}
         \pause
-        \item So you do it manually everytime?
+        \item So\dots you do it manually everytime?
         \pause
         \item Automating that scenario for testing will be expensive\dots but only once!
         \end{itemize}
+    \item In short, stop arguing and start testing!
     \end{itemize}
 \end{frame}
 
@@ -132,22 +135,25 @@
 \label{types_of_tests}
 
 \begin{frame}{Types of tests (not talking about boxes here)}
-    \begin{description}
-    \item [Unit tests] You have written what you were trying to write
+    \begin{itemize}
+    \item \textbf{Unit tests} What you have written is exactly what you were trying to write
     \pause
-    \item [Integration tests] The API of your component can interact with other APIs
+    \item \textbf{Integration tests} The API of your component can interact with other APIs
     \pause
-    \item [Acceptance tests] The API you have implemented fits the bussiness requirements
+    \item \textbf{Acceptance tests} The API you have implemented fits the bussiness requirements
     \pause
-    \item [Performance tests] Your solution is suitable for the expected scenario
-    \end{description}
+    \item \textbf{Performance tests} Your solution is suitable for the expected scenario
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Good practices}
     \begin{itemize}
     \item Separate the tests from the code. If not possible, refactor!
+    \pause
     \item Tests should be repeatable (setup and cleanup)
+    \pause
     \item Tests should be independent from each other (use sequences when necesary)
+    \pause
     \item Tests should be isolated from each other (leave the environment as you found it)
     \end{itemize}
 \end{frame}
@@ -164,14 +170,20 @@
     \item Eunit
         \begin{itemize}
         \item The classic *unit approach
+        \pause
         \item Starting to use it is very easy
+        \pause
         \item \emph{Out of the box} integration with rebar
+        \pause
         \item But\dots Might be annoying to debug it
         \end{itemize}
+    \pause
     \item Common Test
         \begin{itemize}
         \item Much more powerful
+        \pause
         \item Setting it up can be painful
+        \pause
         \item It shines in complex scenarios, so usually is better for integration tests
         \end{itemize}
     \end{itemize}
@@ -193,16 +205,19 @@
 \end{frame}
 
 \begin{frame}{Property testing tools}
-    \begin{description}
-    \item [PropEr / Quickcheck] Let's use some math!
-        \begin{itemize}
-        \item You fed them with properties your code should satisfy
-        \item You specify how the input should look like
-        \item They smartly generate input and try to verify whether the properties are satisfied
-        \item If they find a counterexample, they simplify it for you!
-        \item They can also verify the transitions in your gen\_servers or gen\_fsms
-        \end{itemize}
-    \end{description}
+    \textbf{PropEr / Quickcheck} Let's use some math!
+    \begin{itemize}
+    \pause
+    \item You fed them with properties your code should satisfy
+    \pause
+    \item You specify how the input should look like
+    \pause
+    \item They smartly generate input and try to verify whether the properties are satisfied
+    \pause
+    \item If they find a counterexample, they simplify it for you!
+    \pause
+    \item They can also verify the transitions in your gen\_servers or gen\_fsms
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{PropEr Examples}
@@ -213,18 +228,21 @@
 \label{integration_tests}
 
 \begin{frame}{Main Tools}
-    \begin{description}
-    \item [Common Test] Although you can abuse eunit up to a certain point, Common Test is much more ready for handling
-    integration scenarios
-        \begin{itemize}
-        \item init\_per\_suite and end\_per\_suite for global setup and teardown
-        \item init\_per\_testcase and end\_per\_testcase for per testcase setup and teardown
-        \item start and stop functions in ct\_slave allow you to start diferent so you can rpc them from your tests
-        \item Easy to automatically avoid certain testcases under certain conditions (\emph{\{skip, Reason\}})
-        \item Also posible to run the test suites againsta configurable set of running nodes
-        \item \dots
-        \end{itemize}
-    \end{description}
+    \textbf{Common Test} A flexible tool for complex scenarios
+    \begin{itemize}
+    \pause
+    \item init\_per\_suite and end\_per\_suite for global setup and teardown
+    \pause
+    \item init\_per\_testcase and end\_per\_testcase for per testcase setup and teardown
+    \pause
+    \item start and stop functions in ct\_slave allow you to start diferent vm so you can rpc them from your tests
+    \pause
+    \item Easy to automatically avoid certain testcases under certain conditions (\emph{\{skip, Reason\}})
+    \pause
+    \item Also posible to run the test suites against a configurable set of running nodes
+    \pause
+    \item \dots
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{Common Test Examples}
@@ -237,7 +255,9 @@
 \begin{frame}{General Considerations}
     \begin{itemize}
     \item These tests should check the whole stack, top to bottom
+    \pause
     \item People without technical knowledge about the project should be able to write them
+    \pause
     \item They don't look for bugs, they validate the requirements
     \end{itemize}
 \end{frame}
@@ -245,6 +265,7 @@
 \begin{frame}{What we use at Team Services}
     \begin{itemize}
     \item Since we are developing an HTTP stack, we use JMeter for validation
+    \pause
     \item We could use any of the already described erlang tools, but\dots
     \pause
         \begin{itemize}
@@ -257,7 +278,7 @@
 \begin{frame}{Some other tools used inside Spil Games}
     \emph{Cucumber} is an acceptance test framework with multi-language support that allows you to specify your
     requirements in a very close to natural language way:
-    % TODO Add cucumber caption
+    % TODO Add cucumber caption / source
 \end{frame}
 
 \subsection*{Performance Tests}
@@ -265,8 +286,11 @@
 
 \begin{frame}{Tsung}
     \begin{itemize}
+    \pause
     \item It can be used to generate waves of load according to different parameters
+    \pause
     \item It generates graphics showing how the target system reacted to the load
+    \pause
     \item Very easy to setup using an XML especification
     \end{itemize}
 \end{frame}
@@ -275,8 +299,8 @@
 % TODO Insert tsung example
 \end{frame}
 
-\section*{Applying these techniques}
-\label{applying_these_techniques}
+\section*{Making it happen}
+\label{making_it_happen}
 
 \subsection*{TDD (testing as soon as possible)}
 \label{tdd}
@@ -287,9 +311,13 @@
 \begin{frame}{The purist approach}
     \begin{enumerate}
     \item A developer receives some requirements from his manager, who ideally has writting some acceptance tests
+    \pause
     \item He designs the simplest (flexible) solution fitting those requirements
-    \item He documents and specs the API, only the exported functions and all returning \emph{unimplemented}
+    \pause
+    \item He documents and specs the API, and implements only the exported functions headers all returning \emph{unimplemented}
+    \pause
     \item He writes as many unit and integration tests as necesary for that API
+    \pause
     \item He hands over his work to another developer, who after agreeing with the design fills the implementation until
     all the tests pass
     \end{enumerate}
@@ -298,13 +326,17 @@
 \begin{frame}{A more practical approach}
     \begin{itemize}
     \item Write the tests ASAP, if possible before writing the code itself
+    \pause
     \item While implementing, keep in mind everything you write you have to test it
+    \pause
     \item Start executing your tests ASAP, specially to validate those small simple functions you use all around (yes,
     those that \emph{can never fail})
     \end{itemize}
+    \pause
     When changing exiting code
     \begin{itemize}
     \item Even if the existing coverage is poor, write tests for the changes you introduce
+    \pause
     \item Make sure all the tests are running before touching a single line!
     \end{itemize}
 \end{frame}
@@ -325,15 +357,19 @@
     \item If the process fails, immediatly \emph{blames} the originator of the change
     \pause
     \item Long duration test suites can be put together in a regression task performed during the night
-    \pause
-    \item CI + Automatic Deplyment = Continuous Delivery
     \end{itemize}
+    \pause
+    \begin{equation*}
+    \boxed{CI + AutomaticDeployment = ContinuousDelivery}
+    \end{equation*}
 \end{frame}
 
 \begin{frame}{Keeping an eye on quality}
     \begin{itemize}
     \item Most CI systems have desktop or browser plugins
+    \pause
     \item Screens on the wall can be an option as well
+    \pause
     \item The quality of the final product starts with quality of your code
     \end{itemize}
 \end{frame}
@@ -341,9 +377,13 @@
 \begin{frame}{Measuring code quality}
     \begin{itemize}
     \item \emph{cover} can be integrated with eunit and Common Test to show you the test coverage
+    \pause
     \item Dialyzer can detect typing errors and clear specs help a lot when testing
+    \pause
     \item Open source tools such as Sonar analyse your code looking for risks
+    \pause
     \item They point you to the weakest points of your source
+    \pause
     \item Shows nice graphics about test coverage, unreachable code, nested code\dots
     \end{itemize}
 \end{frame}
