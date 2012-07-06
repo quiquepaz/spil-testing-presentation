@@ -27,8 +27,8 @@
 \pgfdeclareimage[height=1.5cm]{spil-logo}{images/SPILhorizontal.eps}
 
 \setbeamertemplate{footline}{\raisebox{-2ex}{\pgfuseimage{spil-logo}}
-  \usebeamertemplate{navigation symbols}\hfill}
-%  \insertframenumber{}/\inserttotalframenumber}
+    \usebeamertemplate{navigation symbols}\hfill}
+%    \insertframenumber{}/\inserttotalframenumber}
 
 \logo{\pgfuseimage{spil-logo}}
 
@@ -37,10 +37,20 @@
 \usecolortheme{spil}
 \setbeamercolor*{spil}{parent=structure}
 
-\useinnertheme{circles}
-\setbeamertemplate{itemize subitems}{arrow}
+
+
+%\usepackage{enumitem}
+%\setbeamertemplate{items}[circle]
+%\setbeamertemplate{sections/subsections in toc}[circle]
+\setbeamertemplate{itemize item}{$\bullet$}
+%\setbeamertemplate{itemize subitem}{$\Rightarrow$}
+\setbeamertemplate{itemize subitem}[arrow]
+
+
+
 \setbeamercolor{item}{fg=spilpurple}
 \setbeamertemplate{frametitle}[default][right]
+
 
 \usepackage{listings}
 
