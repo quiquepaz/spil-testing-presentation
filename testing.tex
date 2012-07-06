@@ -49,6 +49,11 @@
 {EUGNL / 12-07-2012}
 
 
+\logo{%
+    %\includegraphics[width=1cm,height=1cm,keepaspectratio]{logo3}%
+    \includegraphics[scale=0.20]{images/SPILhorizontal.eps}
+    %\includegraphics[width=1cm,height=1cm,keepaspectratio]{images/}%
+}
 
 % If you have a file called "university-logo-filename.xxx", where xxx
 % is a graphic format that can be processed by latex or pdflatex,
@@ -61,24 +66,22 @@
 
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>{Outline}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>{Outline}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
 
 
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command: 
-
 %\beamerdefaultoverlayspecification{<+->}
 
 \begin{document}
 
 \begin{frame}
   \titlepage
-  \includegraphics[scale=0.25]{images/SPILhorizontal.eps}
 \end{frame}
 
 \begin{frame}{Index}
@@ -274,8 +277,90 @@
 \end{frame}
 
 \begin{frame}{Tsung sample}
+% TODO Insert tsung example
 \end{frame}
 
+\section*{Applying these techniques}
+\label{applying_these_techniques}
+
+\subsection*{TDD (testing as soon as possible)}
+\label{tdd}
+
+    % Basic TDD idea
+    % The purist TDD approach
+
+\begin{frame}{The purist approach}
+    \begin{enumerate}
+    \item A developer receives some requirements from his manager, who ideally has writting some acceptance tests
+    \item He designs the simplest (flexible) solution fitting those requirements
+    \item He documents and specs the API, only the exported functions and all returning \emph{unimplemented}
+    \item He writes as many unit and integration tests as necesary for that API
+    \item He hands over his work to another developer, who after agreeing with the design fills the implementation until
+    all the tests pass
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{A more practical approach}
+    \begin{itemize}
+    \item Write the tests ASAP, if possible before writing the code itself
+    \item While implementing, keep in mind everything you write you have to test it
+    \item Start executing your tests ASAP, specially to validate those small simple functions you use all around (yes,
+    those that \emph{can never fail})
+    \end{itemize}
+    When changing exiting code
+    \begin{itemize}
+    \item Even if the existing coverage is poor, write tests for the changes you introduce
+    \item Make sure all the tests are running before touching a single line!
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{TDD refactor example}
+    % TODO get_age/0 refactor example
+\end{frame}
+
+\subsection*{Automating everything}
+\label{automating_everything}
+
+\begin{frame}{CI Environment}
+    \begin{itemize}
+    \item Builds and tests a release your projects after every commit (Unit, Integration and Acceptance)
+    \pause
+    \item This automatic V\&V process should never take longer than 5 minutes
+    \pause
+    \item If the process fails, immediatly \emph{blames} the originator of the change
+    \pause
+    \item Long duration test suites can be put together in a regression task performed during the night
+    \pause
+    \item CI + Automatic Deplyment = Continuous Delivery
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Keeping an eye on quality}
+    \begin{itemize}
+    \item Most CI systems have desktop or browser plugins
+    \item Screens on the wall can be an option as well
+    \item The quality of the final product starts with quality of your code
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Measuring code quality}
+    \begin{itemize}
+    \item \emph{cover} can be integrated with eunit and Common Test to show you the test coverage
+    \item Dialyzer can detect typing errors and clear specs help a lot when testing
+    \item Open source tools such as Sonar analyse your code looking for risks
+    \item They point you to the weakest points of your source
+    \item Shows nice graphics about test coverage, unreachable code, nested code\dots
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Quality control with Sonar}
+\end{frame}
+
+\section{Q\&A}
+
+\begin{frame}{Thanks Everyone!}
+% TODO Question mark sign image
+\end{frame}
 
 % Everybody tests! (with clasical excuses)
 % Types of testing: unit, integration, acceptance, performance
@@ -319,36 +404,36 @@
 %  \end{itemize}
 %\end{frame}
 %
-%\begin{frame}{Make Titles Informative.}
-%
-%  You can create overlays\dots
-%  \begin{itemize}
-%  \item using the \texttt{pause} command:
-%    \begin{itemize}
-%    \item
-%      First item.
-%      \pause
-%    \item    
-%       Second item.
-%    \end{itemize}
-%  \item
-%    using overlay specifications:
-%    \begin{itemize}
-%    \item<3->
-%      First item.
-%    \item<4->
-%      Second item.
-%    \end{itemize}
-%  \item
-%    using the general \texttt{uncover} command:
-%    \begin{itemize}
-%      \uncover<5->{\item
-%        First item.}
-%      \uncover<6->{\item
-%        Second item.}
-%    \end{itemize}
-%  \end{itemize}
-%\end{frame}
+\begin{frame}{Make Titles Informative.}
+
+  You can create overlays\dots
+  \begin{itemize}
+  \item using the \texttt{pause} command:
+    \begin{itemize}
+    \item
+      First item.
+      \pause
+    \item    
+       Second item.
+    \end{itemize}
+  \item
+    using overlay specifications:
+    \begin{itemize}
+    \item<3->
+      First item.
+    \item<4->
+      Second item.
+    \end{itemize}
+  \item
+    using the general \texttt{uncover} command:
+    \begin{itemize}
+      \uncover<5->{\item
+        First item.}
+      \uncover<6->{\item
+        Second item.}
+    \end{itemize}
+  \end{itemize}
+\end{frame}
 %
 %
 %

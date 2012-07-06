@@ -23,6 +23,15 @@
 
 \mode<presentation>
 
+%\pgfdeclareimage[height=2.25ex,width=2.5\baselineskip]{institut-logo}{zedat}
+\pgfdeclareimage[height=1.5cm]{spil-logo}{images/SPILhorizontal.eps}
+
+\setbeamertemplate{footline}{\raisebox{-2ex}{\pgfuseimage{spil-logo}}
+  \usebeamertemplate{navigation symbols}\hfill}
+%  \insertframenumber{}/\inserttotalframenumber}
+
+\logo{\pgfuseimage{spil-logo}}
+
 \useoutertheme[height=0pt,left]{sidebar}
 
 \usecolortheme{spil}
