@@ -1,6 +1,6 @@
 % $Header: /home/vedranm/bitbucket/beamer/solutions/generic-talks/generic-ornate-15min-45min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
 
-\documentclass[pdf]{beamer}
+\documentclass[]{beamer}
 
 % This file is a solution template for:
 
@@ -57,15 +57,14 @@
 % \logo{\pgfuseimage{university-logo}}
 
 
-
 % Delete this, if you do not want the table of contents to pop up at
 % the beginning of each subsection:
-%\AtBeginSubsection[]
-%{
-%  \begin{frame}<beamer>{Outline}
-%    \tableofcontents[currentsection,currentsubsection]
-%  \end{frame}
-%}
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
 
 
 % If you wish to uncover everything in a step-wise fashion, uncomment
@@ -155,10 +154,10 @@
     \item Tests should be independent from each other (use sequences when necesary)
     \pause
     \item Tests should be isolated from each other (leave the environment as you found it)
+    \pause
+    \item Tests should test specs and not depend on the implementation details
     \end{itemize}
 \end{frame}
-
-
 
 \section{Testing Techniques}
 
@@ -189,10 +188,6 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{EUnit Examples}
-    % TODO Add Eunit examples
-\end{frame}
-
 \begin{frame}{A different approach: property testing}
     Finding good testcases might be hard:
     \begin{itemize}
@@ -220,8 +215,7 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{PropEr Examples}
-    % TODO Add PropEr examples
+\begin{frame}{Unit Tests Examples}
 \end{frame}
 
 \subsection*{Integration tests}
@@ -296,7 +290,30 @@
 \end{frame}
 
 \begin{frame}{Tsung sample}
-% TODO Insert tsung example
+    \begin{itemize}
+    \item A \emph{getToken} wave of 100 req/s during 600 secs
+    \includegraphics[scale=0.40]{images/tsung_spec.eps}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Basic Benchmarking}
+    \begin{itemize}
+    \item Testing a function doesn't have to be painful
+    \pause
+    \item The sooner you realize is bad, the less impact
+    \pause
+    \item \lstinputlisting{code/globalBenchmark.erl}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Basic Benchmarking}
+    \framesubtitle{Sync Execution}
+    \lstinputlisting{code/syncBenchmark.erl}
+\end{frame}
+
+\begin{frame}{Basic Benchmarking}
+    \framesubtitle{Async Execution}
+    \lstinputlisting{code/asyncBenchmark.erl}
 \end{frame}
 
 \section*{Making it happen}
@@ -341,8 +358,24 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{TDD refactor example}
-    % TODO get_age/0 refactor example
+\begin{frame}{TDD refactor}
+    \framesubtitle{Original Tests}
+    \lstinputlisting{code/ageRefactor1.erl}
+\end{frame}
+
+\begin{frame}{TDD refactor}
+    \framesubtitle{Original Code}
+    \lstinputlisting{code/ageRefactor2.erl}
+\end{frame}
+
+\begin{frame}{TDD refactor}
+    \framesubtitle{Updated Tests}
+    \lstinputlisting{code/ageRefactor3.erl}
+\end{frame}
+
+\begin{frame}{TDD refactor}
+    \framesubtitle{Updated Code}
+    \lstinputlisting{code/ageRefactor4.erl}
 \end{frame}
 
 \subsection*{Automating everything}
@@ -392,9 +425,14 @@
 \end{frame}
 
 \section{Q\&A}
+\subsection{}
 
 \begin{frame}{Thanks Everyone!}
-% TODO Question mark sign image
+    \begin{itemize}
+    \item Questions?
+    \item Comments?
+    \item Suggestions?
+    \end{itemize}
 \end{frame}
 %
 %% Everybody tests! (with clasical excuses)
@@ -422,91 +460,8 @@
 %% - Talk about 30s to 2min per frame. So there should be between about
 %%   15 and 30 frames, all told.
 %
-%\begin{frame}{Some Erlang code}
-%    \lstinputlisting{code/sample.erl}
-%\end{frame}
 %
-%
-%%\begin{frame}{Make Titles Informative. Use Uppercase Letters.}{Subtitles are optional.}
-%%  % - A title should summarize the slide in an understandable fashion
-%%  %   for anyone how does not follow everything on the slide itself.
-%%
-%%  \begin{itemize}
-%%  \item
-%%    Use \texttt{itemize} a lot.
-%%  \item
-%%    Use very short sentences or short phrases.
-%%  \end{itemize}
-%%\end{frame}
-%%
-%\begin{frame}{Make Titles Informative.}
-%
-%  You can create overlays\dots
-%  \begin{itemize}
-%  \item using the \texttt{pause} command:
-%    \begin{itemize}
-%    \item
-%      First item.
-%      \pause
-%    \item    
-%       Second item.
-%    \end{itemize}
-%  \item
-%    using overlay specifications:
-%    \begin{itemize}
-%    \item<3->
-%      First item.
-%    \item<4->
-%      Second item.
-%    \end{itemize}
-%  \item
-%    using the general \texttt{uncover} command:
-%    \begin{itemize}
-%      \uncover<5->{\item
-%        First item.}
-%      \uncover<6->{\item
-%        Second item.}
-%    \end{itemize}
-%  \end{itemize}
-%\end{frame}
-%%
-%%
-%%
-%%\begin{frame}{Make Titles Informative.}
-%%\end{frame}
-%%
-%%\begin{frame}{Make Titles Informative.}
-%%\end{frame}
-%%
-%%
-%%
-%%\begin{frame}{Summary}
-%%
-%%  % Keep the summary *very short*.
-%%  \begin{itemize}
-%%  \item
-%%    The \alert{first main message} of your talk in one or two lines.
-%%  \item
-%%    The \alert{second main message} of your talk in one or two lines.
-%%  \item
-%%    Perhaps a \alert{third message}, but not more than that.
-%%  \end{itemize}
-%%  
-%%  % The following outlook is optional.
-%%  \vskip0pt plus.5fill
-%%  \begin{itemize}
-%%  \item
-%%    Outlook
-%%    \begin{itemize}
-%%    \item
-%%      Something you haven't solved.
-%%    \item
-%%      Something else you haven't solved.
-%%    \end{itemize}
-%%  \end{itemize}
-%%\end{frame}
-%
-%
+
 \end{document}
 
 

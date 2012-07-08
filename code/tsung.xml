@@ -4,46 +4,25 @@
     <clients>
          <client host="localhost" use_controller_vm="true"></client>
     </clients>
-
     <servers>
         <server host="api.spilgames.com" port="443" type="ssl"></server>
     </servers>
-
     <load>
         <arrivalphase phase="1" duration="600" unit="second">
-            <users arrivalrate="10" unit="second"></users>
-        </arrivalphase>
-        <arrivalphase phase="2" duration="600" unit="second">
             <users arrivalrate="100" unit="second"></users>
         </arrivalphase>
-        <arrivalphase phase="3" duration="600" unit="second">
-            <users arrivalrate="200" unit="second"></users>
-        </arrivalphase>
-    </load>
-
-    <options>
-       <option name="file_server" id='userdb' value="users.csv"/>
-    </options>
-	
+        <arrivalphase phase="2" duration="600" unit="second">
+            <users arrivalrate="500" unit="second"></users>
+        </load>
     <sessions>
     <session name="api" probability="100" type="ts_http">
-                <setdynvars sourcetype="file" fileid="userdb" delimiter="," order="iter">
-                    <var name="username" />
-                    <var name="password" />
-                </setdynvars>
-
 			<request>
 			    <dyn_variable name="guesttoken" jsonpath="auth.token" />
-                <http url='/account/getToken/' version='1.1' contents='{&quot;context&quot;:{&quot;siteid&quot;:1,&quot;channelid&quot;:1}}' content_type='text/json' method='POST'></http>			 
+                <http url='/account/getToken/' version='1.1' contents=
+                    '{&quot;type&quot;:&quot;sample&quot;}' content_type='text/json' method='POST'>
+                </http>
 			</request>
-			<request subst="true">
-               <dyn_variable name="authtoken" jsonpath="auth.token" />
-			     <http url='/account/login/' version='1.1'  contents='{&quot;auth&quot;:{&quot;token&quot;:&quot;%%_guesttoken%%&quot;},&quot;login&quot;:&quot;%%_username%%&quot;,&quot;password&quot;:&quot;%%_password%%&quot;}' content_type='text/json' method='POST'></http>
-			</request>
-			<request subst="true">
-                <match do="dump" when="nomatch">erltest</match>
-                <http url='/user/get/' version='1.1'  contents='{&quot;auth&quot;:{&quot;token&quot;:&quot;%%_authtoken%%&quot;}}' content_type='text/json' method='POST'></http>
-            </request> 
 	    </session>
     </sessions>
 </tsung>
+
