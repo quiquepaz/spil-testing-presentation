@@ -11,7 +11,7 @@
 
 
 \DeclareOptionBeamer{width}
-{\PassOptionsToPackage{width=#1}{beamerouterthemesidebar}}
+{\PassOptionsToPackage{width=#1}{beamerouterthemesidebarSpil}}
 
 %\DeclareOptionBeamer{hideothersubsections}
 %{\PassOptionsToPackage{hideothersubsections=#1}{beamerouterthemesidebar}}
@@ -32,7 +32,7 @@
 
 \logo{\pgfuseimage{spil-logo}}
 
-\useoutertheme[height=0pt,left]{sidebar}
+\useoutertheme[height=0pt,left]{sidebarSpil}
 
 \usecolortheme{spil}
 \setbeamercolor*{spil}{parent=structure}
@@ -50,6 +50,11 @@
 
 \setbeamercolor{item}{fg=spilpurple}
 \setbeamertemplate{frametitle}[default][right]
+
+
+\setbeamerfont*{section in sidebar}{size=\tiny, series=\bfseries}
+\setbeamerfont*{subsection in sidebar}{series=\bfseries}
+\setbeamerfont*{subsection in sidebar shaded}{series=\bfseries}
 
 
 \usepackage{listings}
