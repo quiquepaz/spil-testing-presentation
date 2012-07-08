@@ -85,34 +85,37 @@
 \begin{frame}{Reasons for testing}
     \begin{itemize}
     \item It increases your confidence in the code you write
-    \pause
     \item Tests themselves are useful documentation
-    \pause
     \item It makes refactoring \emph{really} an option
-    \pause
     \item It helps finding bugs earlier, so the impact is much lower
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Yeah, but...}
     \begin{itemize}
+    \pause
     \item \textit{``My code is so clear/simple it doesn't need tests''}
         %\begin{itemize}[label=$\rightarrow$]
         \begin{itemize}
         \pause
         \item \emph{simplicity} and \emph{clarity} are not universal words
+        \pause
         \item The simpler your code is, the easier for you to test it
         \end{itemize}
+    \pause
     \item \textit{``It takes me much longer testing the code than writing it''}
         \begin{itemize}
         \pause
         \item Was your original code working or you spent the time fixing it?
+        \pause
         \item Have you consider refactoring?
         \end{itemize}
+    \pause
     \item \textit{``Setting up the scenario for testing my code is too complex''}
         \begin{itemize}
         \pause
         \item So\dots you do it manually everytime?
+        \pause
         \item Automating that scenario for testing will be expensive\dots but only once!
         \end{itemize}
     \item In short, stop arguing and start testing!
@@ -133,10 +136,15 @@
 
 \begin{frame}{Good practices}
     \begin{itemize}
+    \pause
     \item Separate the tests from the code. If not possible, refactor!
+    \pause
     \item Tests should be repeatable (setup and cleanup)
+    \pause
     \item Tests should be independent from each other (use sequences when necesary)
+    \pause
     \item Tests should be isolated from each other (leave the environment as you found it)
+    \pause
     \item Tests should test specs and not depend on the implementation details
     \end{itemize}
 \end{frame}
@@ -149,6 +157,7 @@
 
 \begin{frame}{Main tools}
     \begin{itemize}
+    \pause
     \item Eunit
         \begin{itemize}
         \item The classic *unit approach
@@ -178,10 +187,15 @@
 \begin{frame}{Property testing tools}
     \textbf{PropEr / Quickcheck} Let's use some math!
     \begin{itemize}
+    \pause
     \item You fed them with properties your code should satisfy
+    \pause
     \item You specify how the input should look like
+    \pause
     \item They smartly generate input and try to verify whether the properties are satisfied
+    \pause
     \item If they find a counterexample, they simplify it for you!
+    \pause
     \item They can also verify the transitions in your gen\_servers or gen\_fsms
     \end{itemize}
 \end{frame}
@@ -206,10 +220,13 @@
 \begin{frame}{Integration Tests}
     \textbf{Common Test} A flexible tool for complex scenarios
     \begin{itemize}
+    \pause
     \item \emph{per\_suite} and \emph{per\_testcase} setup and teardown
-%    \item start and stop functions in ct\_slave allow you to start diferent VMs with full sets of options so you can rpc them from your tests
+    \pause
     \item Easy to automatically avoid certain testcases under certain conditions (\emph{\{skip, Reason\}})
+    \pause
     \item Also posible to run the test suites against a configurable set of running nodes
+    \pause
     \item \dots
     \end{itemize}
 \end{frame}
@@ -217,11 +234,16 @@
 \begin{frame}{Common Test}
     \framesubtitle {The way we use it}
     \begin{enumerate}
-    \item We use the SUITE setup the pair of projects we want to integrate
+    \pause
+    \item We use the SUITE setup to prepare the pair of projects we want to integrate
+    \pause
     \item Still in the SUITE setup, we use ct\_slave to start the VMs for those projects
+    \pause
     \item We use per testcase setup for creating specific conditions in each node via RPC
+    \pause
     \item Being A and B the nodes we want to integrate, testcases execute something in A that requires it to interact
     with B
+    \pause
     \item Testcases assert the obtained response matches the expected one given the testcase preparation
     \end{enumerate}
 \end{frame}
@@ -231,9 +253,13 @@
 
 \begin{frame}{General Considerations}
     \begin{itemize}
+    \pause
     \item These tests should check the whole stack, top to bottom
+    \pause
     \item People without technical knowledge about the project should be able to write them
+    \pause
     \item They can be written in any language
+    \pause
     \item They don't look for bugs, they validate the requirements
     \end{itemize}
 \end{frame}
@@ -242,9 +268,10 @@
     \begin{itemize}
     \item Since we are developing an HTTP stack, we use JMeter for validation
     \item We could use any of the already described erlang tools, but\dots
-    \pause
         \begin{itemize}
+        \pause
         \item We want QA people from other teams to be able to black test our code
+        \pause
         \item We want to avoid corrupting the acceptance tests with our knowledge of the system internals
         \end{itemize}
     \end{itemize}
@@ -301,11 +328,8 @@
 
 \begin{frame}{Tsung}
     \begin{itemize}
-    \pause
     \item It can be used to generate waves of load according to different parameters
-    \pause
     \item It generates graphics showing how the target system reacted to the load
-    \pause
     \item Very easy to setup using an XML especification
     \end{itemize}
 \end{frame}
@@ -325,6 +349,7 @@
 
 \begin{frame}{The purist approach}
     \begin{enumerate}
+    \pause
     \item A developer receives some requirements from his manager, who ideally has writting some acceptance tests
     \pause
     \item He designs the simplest (flexible) solution fitting those requirements
@@ -342,17 +367,14 @@
     When writting new code
     \begin{itemize}
     \item Write the tests ASAP, if possible before writing the code itself
-    \pause
     \item While implementing, keep in mind everything you write you have to test it
-    \pause
     \item Start executing your tests ASAP, specially to validate those small simple functions you use all around (yes,
     those that \emph{can never fail})
-    \end{itemize}
     \pause
+    \end{itemize}
     When changing exiting code
     \begin{itemize}
     \item Even if the existing coverage is poor, write tests for the changes you introduce
-    \pause
     \item Make sure all the tests are running before touching a single line!
     \end{itemize}
 \end{frame}
@@ -382,11 +404,16 @@
 
 \begin{frame}{CI Environment}
     \begin{itemize}
+    \pause
     \item Builds and tests a release your projects after every commit (Unit, Integration and Acceptance)
+    \pause
     \item This automatic V\&V process should never take longer than 5 minutes
+    \pause
     \item If the process fails, immediatly \emph{blames} the originator of the change
+    \pause
     \item Long duration test suites can be put together in a regression task performed during the night
     \end{itemize}
+    \pause
     \begin{equation*}
     \boxed{CI + AutomaticDeployment = ContinuousDelivery}
     \end{equation*}
@@ -399,15 +426,14 @@
 \begin{frame}{Keeping an eye on quality}
     \begin{itemize}
     \item Most CI systems have desktop or browser plugins
-    \pause
     \item Screens on the wall can be an option as well
-    \pause
     \item The quality of the final product starts with quality of your code
     \end{itemize}
 \end{frame}
 
 \begin{frame}{Measuring code quality}
     \begin{itemize}
+    \pause
     \item \emph{cover} can be integrated with eunit and Common Test to show you the test coverage
     \pause
     \item Dialyzer can detect typing errors and clear specs help a lot when testing
