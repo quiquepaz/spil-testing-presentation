@@ -1,6 +1,5 @@
-% $Header: /home/vedranm/bitbucket/beamer/solutions/generic-talks/generic-ornate-15min-45min.en.tex,v 90e850259b8b 2007/01/28 20:48:30 tantau $
 
-\documentclass[]{beamer}
+\documentclass[aspectratio=169]{beamer}
 
 % This file is a solution template for:
 
@@ -23,10 +22,7 @@
 \mode<presentation>
 {
   \usetheme{Spil}
-  % or ...
-
-  \setbeamercovered{transparent}
-  % or whatever (possibly just delete it)
+  \setbeamercovered{invisible}
 }
 
 \usepackage[english]{babel}
@@ -315,7 +311,6 @@
 \end{frame}
 
 \begin{frame}{Tsung}
-    \framesubtitle{A basic example}
     \begin{itemize}
     \item A \emph{getToken} wave of 100 req/s during 600 secs
     \lstinputlisting[language=xml]{code/tsung.xml}
