@@ -3,8 +3,7 @@ PROJECT=testing
 all: clean compile
 
 compile:
-	rubber ${PROJECT}.tex
-	# && dvips -t a4 ${PROJECT}.dvi && ps2pdf ${PROJECT}.ps
+	pdflatex ${PROJECT}.tex
 
 clean:
 	rm -rf *.pdf *.log *.dvi *.out *.aux *.dvi *.nav *.snm *.toc *.ps

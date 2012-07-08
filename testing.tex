@@ -66,7 +66,6 @@
   \end{frame}
 }
 
-
 % If you wish to uncover everything in a step-wise fashion, uncomment
 % the following command: 
 %\beamerdefaultoverlayspecification{<+->}
@@ -106,29 +105,23 @@
         \begin{itemize}
         \pause
         \item \emph{simplicity} and \emph{clarity} are not universal words
-        \pause
         \item The simpler your code is, the easier for you to test it
         \end{itemize}
-    \pause
     \item \textit{``It takes me much longer testing the code than writing it''}
         \begin{itemize}
         \pause
         \item Was your original code working or you spent the time fixing it?
-        \pause
         \item Have you consider refactoring?
         \end{itemize}
-    \pause
     \item \textit{``Setting up the scenario for testing my code is too complex''}
         \begin{itemize}
         \pause
         \item So\dots you do it manually everytime?
-        \pause
         \item Automating that scenario for testing will be expensive\dots but only once!
         \end{itemize}
     \item In short, stop arguing and start testing!
     \end{itemize}
 \end{frame}
-
 
 \subsection*{Types of tests}
 \label{types_of_tests}
@@ -136,11 +129,8 @@
 \begin{frame}{Types of tests (not talking about boxes here)}
     \begin{itemize}
     \item \textbf{Unit tests} What you have written is exactly what you were trying to write
-    \pause
     \item \textbf{Integration tests} The API of your component can interact with other APIs
-    \pause
     \item \textbf{Acceptance tests} The API you have implemented fits the bussiness requirements
-    \pause
     \item \textbf{Performance tests} Your solution is suitable for the expected scenario
     \end{itemize}
 \end{frame}
@@ -148,18 +138,15 @@
 \begin{frame}{Good practices}
     \begin{itemize}
     \item Separate the tests from the code. If not possible, refactor!
-    \pause
     \item Tests should be repeatable (setup and cleanup)
-    \pause
     \item Tests should be independent from each other (use sequences when necesary)
-    \pause
     \item Tests should be isolated from each other (leave the environment as you found it)
-    \pause
     \item Tests should test specs and not depend on the implementation details
     \end{itemize}
 \end{frame}
 
 \section{Testing Techniques}
+\label{testing_techniques}
 
 \subsection*{Unit tests}
 \label{unit_testing}
@@ -169,20 +156,15 @@
     \item Eunit
         \begin{itemize}
         \item The classic *unit approach
-        \pause
         \item Starting to use it is very easy
-        \pause
         \item \emph{Out of the box} integration with rebar
-        \pause
         \item But\dots Might be annoying to debug it
         \end{itemize}
     \pause
     \item Common Test
         \begin{itemize}
         \item Much more powerful
-        \pause
         \item Setting it up can be painful
-        \pause
         \item It shines in complex scenarios, so usually is better for integration tests
         \end{itemize}
     \end{itemize}
@@ -192,9 +174,7 @@
     Finding good testcases might be hard:
     \begin{itemize}
     \item There might be lots of them
-    \pause
     \item They might be just hard to predict
-    \pause
     \item They might be expensive / hard to generate
     \end{itemize}
 \end{frame}
@@ -202,15 +182,10 @@
 \begin{frame}{Property testing tools}
     \textbf{PropEr / Quickcheck} Let's use some math!
     \begin{itemize}
-    \pause
     \item You fed them with properties your code should satisfy
-    \pause
     \item You specify how the input should look like
-    \pause
     \item They smartly generate input and try to verify whether the properties are satisfied
-    \pause
     \item If they find a counterexample, they simplify it for you!
-    \pause
     \item They can also verify the transitions in your gen\_servers or gen\_fsms
     \end{itemize}
 \end{frame}
@@ -235,14 +210,10 @@
 \begin{frame}{Integration Tests}
     \textbf{Common Test} A flexible tool for complex scenarios
     \begin{itemize}
-    \pause
     \item \emph{per\_suite} and \emph{per\_testcase} setup and teardown
-    \pause
 %    \item start and stop functions in ct\_slave allow you to start diferent VMs with full sets of options so you can rpc them from your tests
     \item Easy to automatically avoid certain testcases under certain conditions (\emph{\{skip, Reason\}})
-    \pause
     \item Also posible to run the test suites against a configurable set of running nodes
-    \pause
     \item \dots
     \end{itemize}
 \end{frame}
@@ -251,14 +222,10 @@
     \framesubtitle {The way we use it}
     \begin{enumerate}
     \item We use the SUITE setup the pair of projects we want to integrate
-    \pause
     \item Still in the SUITE setup, we use ct\_slave to start the VMs for those projects
-    \pause
     \item We use per testcase setup for creating specific conditions in each node via RPC
-    \pause
     \item Being A and B the nodes we want to integrate, testcases execute something in A that requires it to interact
     with B
-    \pause
     \item Testcases assert the obtained response matches the expected one given the testcase preparation
     \end{enumerate}
 \end{frame}
@@ -269,11 +236,8 @@
 \begin{frame}{General Considerations}
     \begin{itemize}
     \item These tests should check the whole stack, top to bottom
-    \pause
     \item People without technical knowledge about the project should be able to write them
-    \pause
     \item They can be written in any language
-    \pause
     \item They don't look for bugs, they validate the requirements
     \end{itemize}
 \end{frame}
@@ -281,7 +245,6 @@
 \begin{frame}{What we use at Team Services}
     \begin{itemize}
     \item Since we are developing an HTTP stack, we use JMeter for validation
-    \pause
     \item We could use any of the already described erlang tools, but\dots
     \pause
         \begin{itemize}
@@ -324,7 +287,6 @@
 \begin{frame}{Basic Benchmarking}
     \begin{itemize}
     \item Testing a function doesn't have to be painful
-    \pause
     \item The sooner you realize is bad, the less impact
     \pause
         \lstinputlisting{code/globalBenchmark.erl}
@@ -426,14 +388,10 @@
 \begin{frame}{CI Environment}
     \begin{itemize}
     \item Builds and tests a release your projects after every commit (Unit, Integration and Acceptance)
-    \pause
     \item This automatic V\&V process should never take longer than 5 minutes
-    \pause
     \item If the process fails, immediatly \emph{blames} the originator of the change
-    \pause
     \item Long duration test suites can be put together in a regression task performed during the night
     \end{itemize}
-    \pause
     \begin{equation*}
     \boxed{CI + AutomaticDeployment = ContinuousDelivery}
     \end{equation*}
