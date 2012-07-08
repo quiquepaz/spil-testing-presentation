@@ -35,7 +35,7 @@
 \usepackage{times}
 \usepackage[T1]{fontenc}
 
-\title[]{Testing in Erlang}
+\title[]{Testing an Erlang Backend}
 %\subtitle
 %{Presentation Subtitle} % (optional)
 
@@ -216,21 +216,29 @@
 \end{frame}
 
 \begin{frame}{Unit Tests Examples}
+    \framesubtitle{To be tested}
+    \lstinputlisting{code/tsLists.erl}
+\end{frame}
+
+\begin{frame}{Unit Tests Examples}
+    \framesubtitle{Eunit}
+    \lstinputlisting{code/tsListsEunit.erl}
+\end{frame}
+
+\begin{frame}{Unit Tests Examples}
+    \framesubtitle{Proper}
+    \lstinputlisting[morekeywords={?FORALL, ?SUCHTHAT, ?WHENFAIL}]{code/tsListsProper.erl}
 \end{frame}
 
 \subsection*{Integration tests}
 \label{integration_tests}
-
-\begin{frame}{Main Tools}
+\begin{frame}{Integration Tests}
     \textbf{Common Test} A flexible tool for complex scenarios
     \begin{itemize}
     \pause
-    \item init\_per\_suite and end\_per\_suite for global setup and teardown
+    \item \emph{per\_suite} and \emph{per\_testcase} setup and teardown
     \pause
-    \item init\_per\_testcase and end\_per\_testcase for per testcase setup and teardown
-    \pause
-    \item start and stop functions in ct\_slave allow you to start diferent vm so you can rpc them from your tests
-    \pause
+%    \item start and stop functions in ct\_slave allow you to start diferent VMs with full sets of options so you can rpc them from your tests
     \item Easy to automatically avoid certain testcases under certain conditions (\emph{\{skip, Reason\}})
     \pause
     \item Also posible to run the test suites against a configurable set of running nodes
@@ -239,8 +247,20 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Common Test Examples}
-    % TODO Add Common test examples
+\begin{frame}{Common Test}
+    \framesubtitle {The way we use it}
+    \begin{enumerate}
+    \item We use the SUITE setup the pair of projects we want to integrate
+    \pause
+    \item Still in the SUITE setup, we use ct\_slave to start the VMs for those projects
+    \pause
+    \item We use per testcase setup for creating specific conditions in each node via RPC
+    \pause
+    \item Being A and B the nodes we want to integrate, testcases execute something in A that requires it to interact
+    with B
+    \pause
+    \item Testcases assert the obtained response matches the expected one given the testcase preparation
+    \end{enumerate}
 \end{frame}
 
 \subsection*{Acceptance Tests}
@@ -251,6 +271,8 @@
     \item These tests should check the whole stack, top to bottom
     \pause
     \item People without technical knowledge about the project should be able to write them
+    \pause
+    \item They can be written in any language
     \pause
     \item They don't look for bugs, they validate the requirements
     \end{itemize}
@@ -264,37 +286,40 @@
     \pause
         \begin{itemize}
         \item We want QA people from other teams to be able to black test our code
-        \item We want to avoid currupting the acceptance tests with our knowledge of the system internals
+        \item We want to avoid corrupting the acceptance tests with our knowledge of the system internals
         \end{itemize}
     \end{itemize}
 \end{frame}
 
+\begin{frame}{What we use at Team Services}
+    \framesubtitle{JMeter}
+    \begin{itemize}
+    \item Simple assertion-based mechanism
+    \item Nice management interface
+        % TODO
+        % JMeter caption
+    \end{itemize}
+\end{frame}
+
 \begin{frame}{Some other tools used inside Spil Games}
-    \emph{Cucumber} is an acceptance test framework with multi-language support that allows you to specify your
-    requirements in a very close to natural language way:
-    % TODO Add cucumber caption / source
+    \framesubtitle{Cucumber}
+    \begin{itemize}
+    \item Multi-language support (Ruby, Php\dots)
+    \item Specifications close to natural language
+        \lstinputlisting[morekeywords={Feature, Given, And, Then, Examples}]{code/cucumberSpec.feature}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Some other tools used inside Spil Games}
+    \framesubtitle{Cucumber}
+    \begin{itemize}
+    \item Powerful framework for implementing the specifications
+        \lstinputlisting[language=php]{code/cucumberImpl.php}
+    \end{itemize}
 \end{frame}
 
 \subsection*{Performance Tests}
 \label{performance_tests}
-
-\begin{frame}{Tsung}
-    \begin{itemize}
-    \pause
-    \item It can be used to generate waves of load according to different parameters
-    \pause
-    \item It generates graphics showing how the target system reacted to the load
-    \pause
-    \item Very easy to setup using an XML especification
-    \end{itemize}
-\end{frame}
-
-\begin{frame}{Tsung sample}
-    \begin{itemize}
-    \item A \emph{getToken} wave of 100 req/s during 600 secs
-    \includegraphics[scale=0.40]{images/tsung_spec.eps}
-    \end{itemize}
-\end{frame}
 
 \begin{frame}{Basic Benchmarking}
     \begin{itemize}
@@ -302,7 +327,7 @@
     \pause
     \item The sooner you realize is bad, the less impact
     \pause
-    \item \lstinputlisting{code/globalBenchmark.erl}
+        \lstinputlisting{code/globalBenchmark.erl}
     \end{itemize}
 \end{frame}
 
@@ -316,14 +341,30 @@
     \lstinputlisting{code/asyncBenchmark.erl}
 \end{frame}
 
+\begin{frame}{Tsung}
+    \begin{itemize}
+    \pause
+    \item It can be used to generate waves of load according to different parameters
+    \pause
+    \item It generates graphics showing how the target system reacted to the load
+    \pause
+    \item Very easy to setup using an XML especification
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Tsung}
+    \framesubtitle{A basic example}
+    \begin{itemize}
+    \item A \emph{getToken} wave of 100 req/s during 600 secs
+    \lstinputlisting[language=xml]{code/tsung.xml}
+    \end{itemize}
+\end{frame}
+
 \section*{Making it happen}
 \label{making_it_happen}
 
 \subsection*{TDD (testing as soon as possible)}
 \label{tdd}
-
-    % Basic TDD idea
-    % The purist TDD approach
 
 \begin{frame}{The purist approach}
     \begin{enumerate}
@@ -341,6 +382,7 @@
 \end{frame}
 
 \begin{frame}{A more practical approach}
+    When writting new code
     \begin{itemize}
     \item Write the tests ASAP, if possible before writing the code itself
     \pause
@@ -396,6 +438,10 @@
     \boxed{CI + AutomaticDeployment = ContinuousDelivery}
     \end{equation*}
 \end{frame}
+\begin{frame}{CI Environment}
+    \framesubtitle{Jenkins}
+    %TODO Jenkins caption
+\end{frame}
 
 \begin{frame}{Keeping an eye on quality}
     \begin{itemize}
@@ -422,6 +468,7 @@
 \end{frame}
 
 \begin{frame}{Quality control with Sonar}
+%TODO Sonar caption
 \end{frame}
 
 \section{Q\&A}

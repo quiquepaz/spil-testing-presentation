@@ -18,8 +18,7 @@
     <session name="api" probability="100" type="ts_http">
 			<request>
 			    <dyn_variable name="guesttoken" jsonpath="auth.token" />
-                <http url='/account/getToken/' version='1.1' contents=
-                    '{&quot;type&quot;:&quot;sample&quot;}' content_type='text/json' method='POST'>
+                <http url='/account/getToken/' version='1.1' contents='{&quot;type&quot;:&quot;sample&quot;}' content_type='text/json' method='POST'>
                 </http>
 			</request>
 	    </session>
