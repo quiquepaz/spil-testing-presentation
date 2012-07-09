@@ -8,7 +8,6 @@ prop_remove_duplicates_keeps_all_elements() ->
             )
         end
     )).
-
 prop_remove_duplicates_contains_no_duplicates() ->
     numtests(1000, ?FORALL(Original, ne_list(integer()),
         begin
