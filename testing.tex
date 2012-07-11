@@ -31,7 +31,7 @@
 \usepackage{times}
 \usepackage[T1]{fontenc}
 
-\title[]{Testing an Erlang Backend}
+\title[]{\alert{Testing an Erlang Backend}}
 %\subtitle
 %{Presentation Subtitle} % (optional)
 
@@ -93,7 +93,6 @@
 
 \begin{frame}{Yeah, but...}
     \begin{itemize}
-    \pause
     \item \textit{``My code is so clear/simple it doesn't need tests''}
         %\begin{itemize}[label=$\rightarrow$]
         \begin{itemize}
@@ -135,11 +134,11 @@
     \end{itemize}
 \end{frame}
 
-\begin{frame}{Good practices}
+\subsection*{Good Practices}
+\label{good_practices}
+
+\begin{frame}{General Good Practices}
     \begin{itemize}
-    \pause
-    \item Separate the tests from the code. If not possible, refactor!
-    \pause
     \item Tests should be repeatable (setup and cleanup)
     \pause
     \item Tests should be independent from each other (use sequences when necesary)
@@ -147,6 +146,8 @@
     \item Tests should be isolated from each other (leave the environment as you found it)
     \pause
     \item Tests should test specs and not depend on the implementation details
+    \pause
+    \item Separate the tests from the code. If not possible, refactor!
     \end{itemize}
 \end{frame}
 
@@ -226,7 +227,7 @@
     \pause
     \item Easy to automatically avoid certain testcases under certain conditions (\emph{\{skip, Reason\}})
     \pause
-    \item Also posible to run the test suites against a configurable set of running nodes
+    \item Also possible to run the test suites against a configurable set of running nodes
     \pause
     \item \dots
     \end{itemize}
@@ -271,7 +272,7 @@
     \item We could use any of the already described erlang tools, but\dots
         \begin{itemize}
         \pause
-        \item We want QA people from other teams to be able to black test our code
+        \item We want QA people from other teams to be able to black-box test our code
         \pause
         \item We want to avoid corrupting the acceptance tests with our knowledge of the system internals
         \end{itemize}
@@ -330,7 +331,7 @@
     \begin{itemize}
     \item It can be used to generate waves of load according to different parameters
     \item It generates graphics showing how the target system reacted to the load
-    \item Very easy to setup using an XML especification
+    \item Uses XML especifications
     \end{itemize}
 \end{frame}
 
@@ -344,12 +345,11 @@
 \section{Making it happen}
 \label{making_it_happen}
 
-\subsection*{TDD (testing as soon as possible)}
+\subsection*{TDD \& BDD}
 \label{tdd}
 
 \begin{frame}{The purist approach}
     \begin{enumerate}
-    \pause
     \item A developer receives some requirements from his manager, who ideally has writting some acceptance tests
     \pause
     \item He designs the simplest (flexible) solution fitting those requirements
@@ -372,7 +372,7 @@
     those that \emph{can never fail})
     \pause
     \end{itemize}
-    When changing exiting code
+    When changing existing code
     \begin{itemize}
     \item Even if the existing coverage is poor, write tests for the changes you introduce
     \item Make sure all the tests are running before touching a single line!
@@ -381,22 +381,34 @@
 
 \begin{frame}{TDD refactor}
     \framesubtitle{Original Tests}
+    \begin{itemize}
+    \item One of the following tests crashed on June 23
     \lstinputlisting{code/ageRefactor1.erl}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{TDD refactor}
     \framesubtitle{Original Code}
+    \begin{itemize}
+    \item The implementation had an obvious flaw
     \lstinputlisting{code/ageRefactor2.erl}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{TDD refactor}
     \framesubtitle{Updated Tests}
+    \begin{itemize}
+    \item We update the tests with the requirements for a human-like approach
     \lstinputlisting{code/ageRefactor3.erl}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}{TDD refactor}
     \framesubtitle{Updated Code}
+    \begin{itemize}
+    \item The resultant code is still very clean. And now it works!
     \lstinputlisting{code/ageRefactor4.erl}
+    \end{itemize}
 \end{frame}
 
 \subsection*{Automating everything}
@@ -436,7 +448,7 @@
     \pause
     \item \textbf{Cover} can be integrated with eunit and Common Test to show you the test coverage
     \pause
-    \item \textbf{Dialyzer} can detect typing errors and clear specs help a lot when testing
+    \item \textbf{Dialyzer} performs static type analysis and clear specs help a lot when testing
     \pause
     \item \textbf{Sonar} analyses your code looking for risks
         \begin{itemize}
@@ -445,7 +457,7 @@
         \pause
         \item Points you to the weakest parts of your source
         \pause
-        \item Shows nice graphics about test coverage, unreachable code, nested code\dots
+        \item Shows nice graphics about test coverage, unreachable code, nested code\dots \textbf{over the time}
         \end{itemize}
     \end{itemize}
 \end{frame}
